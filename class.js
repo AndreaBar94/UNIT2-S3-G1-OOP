@@ -25,6 +25,7 @@ let users = [
 console.log(User.ageMethod(users[1], users[0]));
 
 // esercizio 2
+
 let pets = [];
 
 
@@ -49,11 +50,11 @@ function newPet(){
     let species = document.getElementById('petSpecies').value;
     let breed = document.getElementById('petBreed').value;
     let pet = new Pet(petName, ownerName, species, breed);
-    pets.push(pet)
+    
     console.log(pets)
     localStorage.setItem('pets', JSON.stringify(pets))
-    return pets;
+    pets.push(pet)
 }
 
-console.log()
 
+console.log(Pet.sameOwner(pets[0], pets[1]))
