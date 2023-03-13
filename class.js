@@ -26,7 +26,7 @@ console.log(User.ageMethod(users[1], users[0]));
 
 // esercizio 2
 
-let pets = [];
+const pets = [];
 
 
 class Pet{
@@ -37,24 +37,33 @@ class Pet{
         this.breed = breed;
     }
     
-    static sameOwner(pet1,pet2){
-        if(pet1.ownerName === pet2.ownerName){
-            return true;
-        }
+    haveSameOwner(otherPet) {
+        return this.ownerName === otherPet.ownerName;
     }
 }
 
-function newPet(){
+const createForm = document.getElementById('petForm')
+createForm.addEventListener('submit', function(event){
+    event.preventDefault();
     let petName = document.getElementById('petName').value;
     let ownerName = document.getElementById('petOwner').value;
     let species = document.getElementById('petSpecies').value;
     let breed = document.getElementById('petBreed').value;
     let pet = new Pet(petName, ownerName, species, breed);
-    
-    console.log(pets)
-    localStorage.setItem('pets', JSON.stringify(pets))
     pets.push(pet)
-}
 
+    const petListElement = document.getElementById('petList');
+    const newPetListItem = document.createElement('li');
+    newPetListItem.classList.add('list-group-item');
+    newPetListItem.textContent = `Pet Name: ${pet.petName}, Owner Name: ${pet.ownerName}, Species: ${pet.species}, Breed: ${pet.breed}`;
+    petListElement.appendChild(newPetListItem);
 
-console.log(Pet.sameOwner(pets[0], pets[1]))
+    for (let i = 0; i < pets.length - 1; i++) {
+        const otherPet = pets[i];
+        if (pet.haveSameOwner(otherPet)) {
+            alert(`Warning: ${pet.petName} and ${pet.petName} have the same owner!`);
+        }
+        }
+
+        createForm.reset();
+});
